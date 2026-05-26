@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Viewmap</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Menampilkan Peta Surakarta</h1>
+  <div id="map"></div>
+
+  <script>
+    var map = L.map('map').setView([-7.57, 110.82], 12);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    fetch("Surakarta_Finpro.geojson")
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data).addTo(map);
+      })
+      .catch(error => {
+        console.log("Error loading GeoJSON:", error);
+      });
+  </script>
+</body>
+</html>
